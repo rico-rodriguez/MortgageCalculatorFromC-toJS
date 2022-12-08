@@ -18,19 +18,42 @@ const formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 function calculate() {
+  if (
+    yearlyIncome.value === '' ||
+    loanAmount.value === '' ||
+    interestRate.value === '' ||
+    purchasePrice.value === '' ||
+    marketValue.value === '' ||
+    downPayment.value === '' ||
+    loanTerm.value === ''
+  ) {
+    alert('Please fill out all the fields');
+    return;
+  }
   modal.style.display = 'block';
-  monthlyPayment.innerHTML = `<br>Your monthly income is: 
-  ${formatter.format(yearlyIncome.value)}
-   <br> Your monthly payment is: ${formatter.format(loanAmount.value)} 
-   <br> Your total interest is: ${formatter.format(
-     interestRate.value
-   )} <br> Your total payment is: ${formatter.format(loanAmount.value)}
-  <br> Your loan term is: ${loanTerm.value} years
-  <br> Your purchase price is: ${formatter.format(purchasePrice.value)}
-  <br> Your market value is: ${formatter.format(marketValue.value)}
-  <br> Your down payment is: ${formatter.format(downPayment.value)}
-    <br> Your HOA fee is: ${formatter.format(result)}
-  `;
+  monthlyPayment.innerHTML = `<br>Monthly income is ${formatter.format(
+    yearlyIncome.value / 12
+  )}
+  <br>Total monthly payment will be: ${formatter.format(
+    calculatePayment(
+      purchasePrice.value,
+      marketValue.value,
+      downPayment.value,
+      yearlyIncome.value,
+      interestRate.value,
+      loanTerm.value,
+      hoaFee.value
+    ).totalMonthlyPayment
+  )}
+  <br>We recommend that this loan amount should not exceed 10% of your monthly income<br>`;
+  if (calculateEquityPercentage(marketValue.value, purchasePrice.value) >= 10) {
+    monthlyPayment.innerHTML += `<br>Based on your equity, you do not qualify for a loan<br>`;
+  }
+  if (calculateEquityPercentage(marketValue.value, purchasePrice.value) < 10) {
+    monthlyPayment.innerHTML += `<br>Based on your equity, you qualify for a loan with insurance payments of ${
+      ((initialLoanAmount + originationFeeAmount + CLOSING_COSTS) * 0.01) / 12
+    }<br>`;
+  }
 }
 
 function closeModal() {
@@ -80,7 +103,10 @@ function calculatePayment(
   var totalLoanAmount =
     initialLoanAmount + originationFeeAmount + CLOSING_COSTS;
   var equityValue = marketValue - totalLoanAmount;
-  var buyersEquityPercentage = (equityValue / marketValue) * 100;
+  var buyersEquityPercentage = calculateEquityPercentage(
+    equityValue,
+    marketValue
+  );
   var monthlyInsuredLoan = loanInsuranceCalculator(
     totalLoanAmount,
     buyersEquityPercentage
@@ -110,4 +136,7 @@ function calculatePayment(
   output.totalMonthlyPayment = totalMonthlyPayment.toFixed(2);
   console.log(output);
   return output;
+}
+function calculateEquityPercentage(equityValue, marketValue) {
+  return (equityValue / marketValue) * 100;
 }
