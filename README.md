@@ -1,5 +1,5 @@
 # MortgageCalculatorFromC-toJS
-# An exercise in translating over some logic from C# to JS. 
+# An exercise in translating over some logic from C# to JS. Just using vanilla JS to practice some tailwind on the side.
 
 - [ ] Migrate functions to JS code
 - [ ] Print results to each applicable section
