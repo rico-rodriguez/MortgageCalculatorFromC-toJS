@@ -1,4 +1,4 @@
-const monthlyIncome = document.getElementById('monthly-income');
+const yearlyIncome = document.getElementById('yearly-income');
 const loanAmount = document.getElementById('loan-amount');
 const interestRate = document.getElementById('interest-rate');
 const purchasePrice = document.getElementById('purchase-price');
@@ -18,9 +18,18 @@ const formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 function calculate() {
+  const result = calculatePayment(
+    purchasePrice,
+    marketValue,
+    downPayment,
+    yearlyIncome,
+    interestRate,
+    loanTerm,
+    hoaFee
+  );
   modal.style.display = 'block';
   monthlyPayment.innerHTML = `<br>Your monthly income is: 
-  ${formatter.format(monthlyIncome.value)}
+  ${formatter.format(yearlyIncome.value)}
    <br> Your monthly payment is: ${formatter.format(loanAmount.value)} 
    <br> Your total interest is: ${formatter.format(
      interestRate.value
@@ -29,7 +38,7 @@ function calculate() {
   <br> Your purchase price is: ${formatter.format(purchasePrice.value)}
   <br> Your market value is: ${formatter.format(marketValue.value)}
   <br> Your down payment is: ${formatter.format(downPayment.value)}
-    <br> Your HOA fee is: ${formatter.format(hoaFee.value)}
+    <br> Your HOA fee is: ${formatter.format(result)}
   `;
 }
 

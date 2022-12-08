@@ -16,11 +16,11 @@
         class="flex flex-col p-10 drop-shadow-md rounded-md justify-center text-center bg-blue-400"
       >
         <h1 class="prose text-blue-50 prose-2xl mb-4">Mortgage Calculator</h1>
-        <label for="monthly-income" class="text-blue-50">Monthly Income</label>
+        <label for="yearly-income" class="text-blue-50">Yearly Income</label>
         <input
           type="number"
-          name="monthly-income"
-          id="monthly-income"
+          name="yearly-income"
+          id="yearly-income"
           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50"
         />
         <label for="loan" class="text-blue-50">Loan Amount</label>
@@ -70,7 +70,7 @@
         <label for "hoa" class="text-blue-50">Is there an HOA fee?</label>
 
         <div class="inline rounded-md shadow-sm" checked role="group" id="hoa-selector">
-            <button onclick="showHoaFeeBox()" value="yes" type="button" class="py-2 px-8 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 checked:bg-slate-500">
+            <button onclick="showHoaFeeBox()" value="yes" type="button" class=" py-2 px-8 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 checked:bg-slate-500">
               <p id="hoa-yes-no">No</p>
             </button>
           </div>
@@ -194,5 +194,6 @@
       </div>
     </div>
     <script src="./main.js"></script>
+    <script src="./calculator.js"></script>
   </body>
 </html>
